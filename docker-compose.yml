@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  rabbit:
+    image: 'rabbitmq:3-management'
+    env_file:
+      - .env
+    ports:
+      - 15672:15672
+      - 5672:5672
+    networks:
+      - fun-net
+
+networks:
+  fun-net:
+    driver: bridge  
