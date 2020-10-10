@@ -12,9 +12,7 @@ services:
       - fun-net
   
   pgdb-sensors:
-    image: pgdb-sensors
-    build:
-      context: ./pgdb-sensors
+    image: postgres:13
     env_file:
       - .env
     ports:
