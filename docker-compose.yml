@@ -10,6 +10,23 @@ services:
       - 5672:5672
     networks:
       - fun-net
+  
+  pgdb-sensors:
+    image: pgdb-sensors
+    build:
+      context: ./pgdb-sensors
+    env_file:
+      - .env
+    networks:
+      - fun-net
+
+  pgdb-sensors-adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 10000:8080
+    networks:
+      - fun-net
 
 networks:
   fun-net:
