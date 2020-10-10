@@ -1,0 +1,11 @@
+<!-- TODO: update with real data after loading sensors from the database -->
+<div class="container mat-elevation-z8" *ngFor="let sensor of sensors">
+  <div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="chart mat-elevation-z8" *ngIf="!isLoadingResults">
+    <google-chart title="{{sensor.sensorName}}" type="LineChart" [data]="sensorData" [options]="options"
+      [dynamicResize]="'true'">
+    </google-chart>
+  </div>
+</div>
