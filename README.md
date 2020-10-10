@@ -17,6 +17,7 @@
 - Postman collection to hit the go backend
 
 ### TODO short-list
+- move angular and the go-microservice in containers
 - Integrate frontend with the go backend microservice
 - write a sensor
 - write a coordinator
