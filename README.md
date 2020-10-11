@@ -15,12 +15,14 @@
 - Initial config of PostgresDB
 - Simple REST API in golang (Angular->go->postgres)
 - Postman collection to hit the go backend
+- Move angular and the go-microservice in containers
+- Integrate frontend with the go backend microservice(sensor list only)
 
 ### TODO short-list
-- move angular and the go-microservice in containers
-- Integrate frontend with the go backend microservice
 - write a sensor
+- bring up mongo
 - write a coordinator
+- write microservice to fetch sensor data from mongo
 
 ### DONE Big picture
 
