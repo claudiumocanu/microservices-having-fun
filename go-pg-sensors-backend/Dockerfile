@@ -24,15 +24,3 @@ FROM alpine
 COPY --from=builder /dist/main /
 # Command to run
 ENTRYPOINT ["/main"]
-
-
-
-# FROM golang:1.15.2
-# WORKDIR /go/src/app/exec
-# COPY . .
-# RUN go get -d -v ./...
-# RUN go install -v ./...
-
-# EXPOSE 3000
-
-# CMD ["exec"]
