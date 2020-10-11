@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  acm-frontend:
+    image: acm-frontend
+    build:
+      context: ./acm-frontend
+    env_file:
+      - .env
+    ports:
+      - 10080:80
+    networks:
+      - fun-net
+
   rabbit:
     image: 'rabbitmq:3-management'
     env_file:
