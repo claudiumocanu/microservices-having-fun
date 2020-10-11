@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/claudiumocanu/microservices-having-fun/go-pg-sensors-backend/database"
 	"github.com/gofiber/fiber/v2"
 	"github.com/jinzhu/gorm"
@@ -8,13 +10,13 @@ import (
 
 type Sensor struct {
 	gorm.Model
-	SensorName          string  `json:"sensorname"`
-	SeonsorUUID         string  `json:"seonsoruuid"`
-	MeasuringUnit       string  `json:"measuringunit"`
-	MinContructiveValue float32 `json:"mincontructivevalue"`
-	MaxContructiveValue float32 `json:"maxcontructivevalue"`
-	MinNominalValue     float32 `json:"minnominalvalue"`
-	MaxNominalValue     float32 `json:"maxnominalvalue"`
+	SensorName          string  `json:"sensorName"`
+	SeonsorUUID         string  `json:"sensorUUID"`
+	MeasuringUnit       string  `json:"measuringUnit"`
+	MinContructiveValue float32 `json:"minContructiveValue"`
+	MaxContructiveValue float32 `json:"maxContructiveValue"`
+	MinNominalValue     float32 `json:"minNominalValue"`
+	MaxNominalValue     float32 `json:"maxNominalValue"`
 	Geolocation         string  `json:"geolocation"`
 }
 
@@ -39,6 +41,7 @@ func PostSensor(c *fiber.Ctx) error {
 	if err := c.BodyParser(sensor); err != nil {
 		return c.Status(503).SendString(err.Error())
 	}
+	fmt.Println(sensor)
 	if sensor.SensorName == "" || sensor.SeonsorUUID == "" {
 		return c.Status(422).SendString("Sensor name and UUID are mandatory fields")
 	}
