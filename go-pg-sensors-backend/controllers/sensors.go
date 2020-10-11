@@ -1,10 +1,8 @@
 package controllers
 
 import (
-	"fmt"
-
 	"github.com/claudiumocanu/microservices-having-fun/go-pg-sensors-backend/database"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 	"github.com/jinzhu/gorm"
 )
 
@@ -20,43 +18,44 @@ type Sensor struct {
 	Geolocation         string  `json:"geolocation"`
 }
 
-func GetSensors(c *fiber.Ctx) {
+func GetSensors(c *fiber.Ctx) error {
 	db := database.DBConn
 	var sensors []Sensor
 	db.Find(&sensors)
 	c.JSON(sensors)
+	return nil
 }
-func GetSensor(c *fiber.Ctx) {
+func GetSensor(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn
 	var sensor Sensor
 	db.Find(&sensor, id)
 	c.JSON(sensor)
+	return nil
 }
-func PostSensor(c *fiber.Ctx) {
+func PostSensor(c *fiber.Ctx) error {
 	db := database.DBConn
 	sensor := new(Sensor)
 	if err := c.BodyParser(sensor); err != nil {
-		c.Status(503).Send(err)
-		return
+		return c.Status(503).SendString(err.Error())
 	}
 	if sensor.SensorName == "" || sensor.SeonsorUUID == "" {
-		c.Status(422).Send("Name and UUID are mandatory fileds for a sensor")
-		return
+		return c.Status(422).SendString("Sensor name and UUID are mandatory fields")
 	}
 	db.Create(&sensor)
 	c.JSON(sensor)
+	return nil
 }
-func DeleteSensor(c *fiber.Ctx) {
+func DeleteSensor(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn
 
 	var sensor Sensor
 	db.First(&sensor, id)
 	if sensor.ID == 0 {
-		c.Status(500).Send(fmt.Sprintf("Sensor not found with ID=%s", id))
-		return
+		return c.Status(500).SendString("Sensor not found")
 	}
 	db.Delete(&sensor)
-	c.Send("Sensor successfully deleted")
+	c.SendString("Sensor successfully deleted")
+	return nil
 }

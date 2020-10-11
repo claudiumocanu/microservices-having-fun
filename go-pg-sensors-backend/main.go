@@ -7,13 +7,16 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-func homepage(c *fiber.Ctx) {
-	c.Send("Follow the white rabbit.")
+func homepage(c *fiber.Ctx) error {
+	c.SendString("Follow the white rabbit.")
+	return nil
 }
 
 func setupRoutes(app *fiber.App) {
@@ -47,10 +50,15 @@ func initDbConn() {
 
 func main() {
 	app := fiber.New()
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowHeaders: "",
+	}))
+
 	initDbConn()
 	defer database.DBConn.Close()
 
 	setupRoutes(app)
 
-	app.Listen(3000)
+	app.Listen(":3000")
 }
