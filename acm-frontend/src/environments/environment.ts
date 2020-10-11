@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  //TODO: update url to ingress IP when deployed
+  URL_GO_PG_SENSORS_BACKEND: "http://localhost:10081/api/v1"
 };
 
 /*

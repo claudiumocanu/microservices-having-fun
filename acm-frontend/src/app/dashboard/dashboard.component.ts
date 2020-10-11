@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SensorService } from '../services/sensor.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  sensorName = 'sensor-A';
   options = {
     height: '500',
     titleTextStyle: {
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
       textStyle: { color: '#3A3' }
     }
   };
-  sensors = new Array();
+  sensors: Array<any> = [];
   sensorData: Array<Array<any>> = [
     [1, 37.8, 80.8, 41.8],
     [2, 30.9, 69.5, 32.4],
@@ -61,12 +61,16 @@ export class DashboardComponent implements OnInit {
 
   isLoadingResults = true;
 
-  constructor() {
-    this.sensors.push({sensorName: "sensor-X"},{sensorName: "sensor-Y"});
-    this.isLoadingResults = false;
+  constructor(private sensorService: SensorService) {
+
   }
 
   ngOnInit(): void {
+    // Fetch registered sensors from postgres
+    this.sensorService.getSensors()
+      .subscribe(data => {
+        this.sensors = data as [];
+        this.isLoadingResults = false;
+      })
   }
-
 }
