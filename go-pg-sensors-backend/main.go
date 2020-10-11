@@ -39,8 +39,7 @@ func initDbConn() {
 		panic(err)
 	}
 	fmt.Println("Database connection successfully opened")
-	// The table is created in the pg init script. Following line
-	// is redundant, but it can be handy in different scenarios.
+	// Creates sensor table in postgres
 	database.DBConn.AutoMigrate(&controllers.Sensor{})
 	fmt.Println("Sensors table initialized")
 
