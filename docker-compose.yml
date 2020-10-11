@@ -5,10 +5,23 @@ services:
     image: acm-frontend
     build:
       context: ./acm-frontend
+    restart: on-failure
     env_file:
       - .env
     ports:
       - 10080:80
+    networks:
+      - fun-net
+
+  go-pg-sensors-backend:
+    image: go-pg-sensors-backend
+    build:
+      context: ./go-pg-sensors-backend
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - 10081:3000
     networks:
       - fun-net
 
